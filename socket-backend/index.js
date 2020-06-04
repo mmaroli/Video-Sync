@@ -10,7 +10,7 @@ server.listen(80);
 // -------------------------------------------------
 // Serving Client Code
 
-function handler (req, res) {
+function handler(req, res) {
   fs.readFile(__dirname + '/index.html',
   (err, data) => {
     if (err) {
@@ -30,9 +30,9 @@ function handler (req, res) {
 
 
 
-
 io.on('connection', (socket) => {
   console.log("User has connected");
+  socket.nickname = socket.id
 
   socket.on('create-nickname', (nickname) => {
     socket.nickname = nickname
@@ -40,13 +40,9 @@ io.on('connection', (socket) => {
 
   socket.on('join-room', (room_id) => {
     socket.join(room_id, () => {
-      let rooms = Object.keys(socket.rooms);
-      console.log(rooms);
       io.to(room_id).emit("new-user", 'hello', socket.nickname)
     });
   });
-
-
 
 
   socket.on('disconnect', () => {
