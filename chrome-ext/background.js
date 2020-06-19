@@ -7,9 +7,15 @@ chrome.runtime.onInstalled.addListener( () => {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     chrome.declarativeContent.onPageChanged.addRules([
       {
-        conditions: [new chrome.declarativeContent.PageStateMatcher({
-          pageUrl: {hostEquals: 'developer.chrome.com'}
-        })],
+        conditions: [
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: {hostEquals: 'www.netflix.com'}
+          }),
+
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: {hostEquals: 'www.hulu.com'}
+          })
+        ],
 
         actions: [new chrome.declarativeContent.ShowPageAction()]
       }
